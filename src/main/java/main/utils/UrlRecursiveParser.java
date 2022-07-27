@@ -16,7 +16,6 @@ import java.util.concurrent.RecursiveTask;
 @Component
 public class UrlRecursiveParser extends RecursiveTask<HashSet<String>> {
 
-
     @Autowired
     private DBSaver dbSaver;
 
@@ -41,55 +40,20 @@ public class UrlRecursiveParser extends RecursiveTask<HashSet<String>> {
     }
 
     public HashSet<String> startForkJoinPool(String siteURL) {
-        System.out.println("@@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!"+configService.getUserAgent());
-
         linksSet = new HashSet<>();
         if(pool.isShutdown()){
             pool = new ForkJoinPool();
         }
-//        ForkJoinPool pool = new ForkJoinPool();
 
         UrlRecursiveParser parser = applicationContext.getBean(UrlRecursiveParser.class);
         parser.setUrl(siteURL);
         parser.setOutLinksSet(linksSet);
-
-//        UrlRecursiveParser parser = new UrlRecursiveParser(siteURL, linksSet);
-
-
-
-//        pool.invoke(parser);
         pool.execute(parser);
-//        linksSet = parser.join();
-//        pool.shutdown();
 
         System.out.println("Сохранено уникальных ссылок: " + linksSet.size());
         return linksSet;
     }
 //
-//    public String getHostFromLink(String link) {
-//        URL url = null;
-//        if (!link.isEmpty()) {
-//            try {
-//                url = new URL(link);
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-//            return url.getHost(); }
-//        else return "";
-//    }
-//
-//    public String getPathFromLink(String link) {
-//        URL url = null;
-//        if (!link.isEmpty()) {
-//            try {
-//                url = new URL(link);
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-//            return url.getFile(); }
-//        else return "";
-//    }
-
     private boolean checkLink(String link) {
         return !link.contains("#")
                 && !link.contains("?")
@@ -117,12 +81,6 @@ public class UrlRecursiveParser extends RecursiveTask<HashSet<String>> {
                             domainHost.equals(domainCurrentLink) &&
                             !outLinksSet.contains(currentLink)) {
                         outLinksSet.add(currentLink);
-//                        try {
-//                            Thread.sleep(100);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-
                         try {
                             dbSaver.addPagesToDBviaHibernate(currentLink);
                         } catch (IOException e) {
@@ -140,9 +98,6 @@ public class UrlRecursiveParser extends RecursiveTask<HashSet<String>> {
         );
         return outLinksSet;
     }
-
-
-
 
     @Override
     protected HashSet<String> compute() {
@@ -163,13 +118,9 @@ public class UrlRecursiveParser extends RecursiveTask<HashSet<String>> {
                                 domainHost.equals(domainCurrentLink) &&
                                 !outLinksSet.contains(currentLink)) {
 
-
                             UrlRecursiveParser task = applicationContext.getBean(UrlRecursiveParser.class);
                             task.setUrl(currentLink);
                             task.setOutLinksSet(outLinksSet);
-
-//                            UrlRecursiveParser task = new UrlRecursiveParser(currentLink, outLinksSet);
-
 
                             task.fork();
                             taskList.add(task);

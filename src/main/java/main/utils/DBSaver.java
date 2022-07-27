@@ -33,13 +33,6 @@ public class DBSaver {
     @Autowired
     private ConfigService configService;
 
-//    private SiteService siteService = new SiteService();
-//    private PageService pageService = new PageService();
-//    private FieldService fieldService = new FieldService();
-//    private LemmaService lemmaService = new LemmaService();
-//    private IndexService indexService = new IndexService();
-//    private Lemmatizer lemmatizer = new Lemmatizer();
-
     public void addPagesToDBviaHibernate(String url) throws IOException {
         int code = Jsoup.connect(url)
                 .userAgent(configService.getUserAgent())
@@ -51,7 +44,6 @@ public class DBSaver {
                 .get().toString();
         content = content.replaceAll("\"","\\\"").replaceAll("'","''");
 
-//        SiteService siteService = new SiteService();
         Site site = siteService.findByName("%" + getHostFromLink(url) + "%");
 
         Page page = new Page();
@@ -59,19 +51,12 @@ public class DBSaver {
         page.setCode(code);
         page.setContent(content);
         page.setSiteID(site.getId());
-//        PageService pageService = new PageService();
         int pageId = pageService.savePage(page);
-
 
         site.setStatusTime(new Date());
         siteService.updateSite(site);
 
-
-//        FieldService fieldService = new FieldService();
         List<Field> fields = fieldService.findAllFields();
-//        LemmaService lemmaService = new LemmaService();
-//        IndexService indexService = new IndexService();
-//        Lemmatizer lemmatizer = new Lemmatizer();
         String finalContent = content;
 
         HashMap<String, Float> mapTitle = new HashMap<>();
