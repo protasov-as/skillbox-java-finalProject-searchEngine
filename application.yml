@@ -1,0 +1,41 @@
+config:
+  userAgent: Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6
+  referrer: http://www.google.com
+  webInterfacePath: /admin
+  sites:
+    - url: https://www.abc-school.org/
+      name: ABC
+#    -
+#      url: https://www.speakersunited.ru/
+#      name: SU
+#    -
+#      url: https://iteacherschool.ru/
+#      name: Iteacher
+#    -
+#      url: https://studiya68.ru/
+#      name: Studiya
+#    -
+#      url: https://dokiprint.ru/
+#      name: Doki
+#    -
+#      url: https://center68.ru/
+#      name: C68
+#    -
+#      url: https://www.plus-dialog.ru/
+#      name: D+
+#    -
+#      url: https://lingva-lab.ru/
+#      name: LLVrn
+#    -
+#      url: https://playback.ru/
+#      name: PlayBack
+
+
+
+sql:
+  url: jdbc:mysql://localhost:3306/test?useSSL=false
+  username: root
+  password: pwd
+  driverClassName: com.mysql.jdbc.Driver
+  showSql: true
+  ddlAutoMode: update
