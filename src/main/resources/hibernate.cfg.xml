@@ -7,7 +7,7 @@
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/skillbox?allowPublicKeyRetrieval=true</property>
         <property name="connection.username">root</property>
-        <property name="connection.password">Wshulck1!</property>
+        <property name="connection.password">pwd</property>
         <!-- JDBC connection pool settings ... using built-in test pool -->
         <property name="connection.pool_size">50</property>
         <!-- Select our SQL dialect -->
