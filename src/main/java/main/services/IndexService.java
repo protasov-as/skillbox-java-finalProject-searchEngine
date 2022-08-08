@@ -1,11 +1,13 @@
 package main.services;
 
 import main.dao.IndexDao;
+import main.dao.IndexDaoCrud;
 import main.models.Index;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class IndexService {
@@ -13,22 +15,27 @@ public class IndexService {
     @Autowired
     private IndexDao indexDao;
 
+    @Autowired
+    private IndexDaoCrud indexDaoCrud;
+
     public IndexService(){
     }
 
-    public Index findIndex(int id) {
-        return indexDao.findById(id);
+    public Optional<Index> findIndex(int id) {
+        return indexDaoCrud.findById(id);
     }
 
     public int saveIndex(Index index) {
-        return indexDao.save(index);
+        return indexDaoCrud.save(index).getId();
     }
 
     public Boolean checkIfIndexExists(int page_id, int lemma_id) {
-        return indexDao.checkIfIndexExists(page_id, lemma_id);
+        return indexDaoCrud.existsByPageIdAndLemmaId(page_id, lemma_id);
+//        return indexDao.checkIfIndexExists(page_id, lemma_id);
     }
 
-    public void deleteByPageId(int page_id) {indexDao.deleteByPageId(page_id);
+    public void deleteByPageId(int page_id) {
+        indexDao.deleteByPageId(page_id);
     }
 
     public int saveOrUpdateIndex(Index index) {
@@ -48,7 +55,7 @@ public class IndexService {
     }
 
     public void deleteIndex(Index index) {
-        indexDao.delete(index);
+        indexDaoCrud.delete(index);
     }
 
     public void updateIndex(Index index) {
@@ -56,11 +63,11 @@ public class IndexService {
     }
 
     public List<Index> findAllIndexes() {
-        return indexDao.findAll();
+        return indexDaoCrud.findAll();
     }
 
     public void deleteAllIndexes() {
-        indexDao.deleteAll();
+        indexDaoCrud.deleteAll();
     }
 
     public void dropAndCreateTableIndex() {

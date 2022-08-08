@@ -1,37 +1,45 @@
 package main.services;
 
 import main.dao.LemmaDao;
+import main.dao.LemmaDaoCrud;
 import main.models.Lemma;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class LemmaService {
     @Autowired
     private LemmaDao lemmaDao;
 
+    @Autowired
+    private LemmaDaoCrud lemmaDaoCrud;
+
     public LemmaService() {
     }
 
-    public Lemma findLemma(Integer id) {
-        return lemmaDao.findById(id);
+    public Optional<Lemma> findLemma(Integer id) {
+        return lemmaDaoCrud.findById(id);
     }
 
     public List<Lemma> findLemmaByName(String lemma) {
-        return lemmaDao.findByName(lemma);
+        return lemmaDaoCrud.findAllByLemma(lemma);
+//        return lemmaDao.findByName(lemma);
     }
 
-    public Lemma findByNameAndSiteID(String name, int siteID) {return lemmaDao.findByNameAndSiteID(name, siteID);}
+    public Lemma findByNameAndSiteID(String lemma, int siteID) {
+        return lemmaDaoCrud.findByLemmaAndSiteID(lemma, siteID);
+//        return lemmaDao.findByNameAndSiteID(lemma, siteID);
+    }
 
     public boolean isLemmaTooFrequent(Lemma lemma) {
         return lemmaDao.isLemmaTooFrequent(lemma);
-    };
+    }
 
     public void saveLemma(Lemma lemma) {
-        lemmaDao.save(lemma);
+        lemmaDaoCrud.save(lemma);
     }
 
     public int saveOrUpdateLemma(Lemma lemma) {
@@ -43,7 +51,7 @@ public class LemmaService {
     }
 
     public void deleteLemma(Lemma lemma) {
-        lemmaDao.delete(lemma);
+        lemmaDaoCrud.delete(lemma);
     }
 
     public void updateLemma(Lemma lemma) {
@@ -51,17 +59,20 @@ public class LemmaService {
     }
 
     public List<Lemma> findAllLemmas() {
-        return lemmaDao.findAll();
+        return lemmaDaoCrud.findAll();
     }
 
-    public List<Lemma> findAllBySiteID(int siteID) {return lemmaDao.findAllBySiteID(siteID);}
+    public List<Lemma> findAllBySiteID(int siteID) {
+        return lemmaDaoCrud.findAllBySiteID(siteID);
+//        return lemmaDao.findAllBySiteID(siteID);
+    }
 
     public void deleteAllLemmas() {
-        lemmaDao.deleteAll();
+        lemmaDaoCrud.deleteAll();
     }
 
     public long countlemmas() {
-        return lemmaDao.countLemmas();
+        return lemmaDaoCrud.count();
     }
 
     public Long countLemmasOnSite(int siteID)  {

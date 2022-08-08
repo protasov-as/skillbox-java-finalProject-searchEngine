@@ -59,9 +59,9 @@ public class Searcher {
     private ArrayList<Data> lemmaIndexesToData(List<Index> leastFrequentLemmaIndexes, ArrayList<Lemma> sortedArray) {
         ArrayList<Data> resultList = new ArrayList<>();
         leastFrequentLemmaIndexes.forEach(lfl -> {
-            Page page = pageService.findPage(lfl.getPageId());
-            Site site = siteService.findById(page.getSiteID());
-            Lemma lemma = lemmaService.findLemma(lfl.getLemmaId());
+            Page page = pageService.findPage(lfl.getPageId()).get();
+            Site site = siteService.findById(page.getSiteID()).get();
+            Lemma lemma = lemmaService.findLemma(lfl.getLemmaId()).get();
             Data data = new Data(site.getUrl(),
                     site.getName(),
                     page.getPath(),

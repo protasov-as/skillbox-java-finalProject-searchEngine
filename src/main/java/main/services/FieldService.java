@@ -1,11 +1,13 @@
 package main.services;
 
 import main.dao.FieldDao;
+import main.dao.FieldDaoCrud;
 import main.models.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FieldService {
@@ -13,23 +15,22 @@ public class FieldService {
     @Autowired
     private FieldDao fieldDao;
 
+    @Autowired
+    private FieldDaoCrud fieldDaoCrud;
+
     public FieldService() {
     }
 
-    public Field findField(int id) {
-        return fieldDao.findById(id);
+    public Optional<Field> findField(int id) {
+        return fieldDaoCrud.findById(id);
     }
 
     public void saveField(Field field) {
-        fieldDao.save(field);
-    }
-
-    public void persistField(Field field) {
-        fieldDao.persist(field);
+        fieldDaoCrud.save(field);
     }
 
     public void deleteField(Field field) {
-        fieldDao.delete(field);
+        fieldDaoCrud.delete(field);
     }
 
     public void updateField(Field field) {
@@ -37,11 +38,11 @@ public class FieldService {
     }
 
     public List<Field> findAllFields() {
-        return fieldDao.findAll();
+        return fieldDaoCrud.findAll();
     }
 
     public void deleteAllFields() {
-        fieldDao.deleteAll();
+        fieldDaoCrud.deleteAll();
     }
 
     public void initializeFields(){
@@ -51,13 +52,13 @@ public class FieldService {
         title.setName("title");
         title.setSelector("title");
         title.setWeight(1.0f);
-        persistField(title);
+        saveField(title);
 
         Field body = new Field();
         body.setName("body");
         body.setSelector("body");
         body.setWeight(0.8f);
-        persistField(body);
+        saveField(body);
 
     }
 

@@ -30,21 +30,6 @@ public class LemmaDao implements DaoInterface<Lemma, Integer>{
         return id;
     }
 
-//    public int saveOrUpdateLemmaOld(Lemma lemma) {
-//        int id;
-//        if(checkIfLemmaExists(lemma.getLemma())) {
-//            Lemma lemmaFromDB = findByName(lemma.getLemma());
-////            int frequency = lemma.getFrequency() + lemmaFromDB.getFrequency();
-//            int frequency = lemmaFromDB.getFrequency() + 1;
-//            lemmaFromDB.setFrequency(frequency);
-//            update(lemmaFromDB);
-//            id = lemmaFromDB.getId();
-//        } else {
-//            id = save(lemma);
-//        }
-//        return id;
-//    }
-
     public int saveOrUpdateLemma(Lemma lemma) {
         int id;
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
@@ -56,7 +41,6 @@ public class LemmaDao implements DaoInterface<Lemma, Integer>{
 
         if(!query.getResultList().isEmpty()) {
             Lemma lemmaFromDB = (Lemma) query.getSingleResult();
-//            int frequency = lemma.getFrequency() + lemmaFromDB.getFrequency();
             int frequency = lemmaFromDB.getFrequency() + 1;
             lemmaFromDB.setFrequency(frequency);
             session.update(lemmaFromDB);
@@ -124,11 +108,8 @@ public class LemmaDao implements DaoInterface<Lemma, Integer>{
     }
 
     public List<Lemma> findByName(String name) {
-//        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Lemma where lemma = :lemma");
         List<Lemma> lemmas = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Lemma where lemma = :lemma").setParameter("lemma", name).list();
-//        query.setParameter("lemma", name);
-//        query.setMaxResults(1);
-//        if(!query.getResultList().isEmpty()) {
+
         if(!lemmas.isEmpty()) {
             return lemmas;
         } else {
@@ -156,7 +137,6 @@ public class LemmaDao implements DaoInterface<Lemma, Integer>{
     }
 
     public boolean isLemmaTooFrequent(Lemma lemma) {
-//        PageService pageService = new PageService();
         int totalPagesCount = pageService.findAllPages().size();
         return lemma.getFrequency() >= totalPagesCount / 2;
     }

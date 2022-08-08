@@ -10,7 +10,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext("main");
+//        ApplicationContext context = new AnnotationConfigApplicationContext("main");
 
         SpringApplication.run(Main.class, args);
 

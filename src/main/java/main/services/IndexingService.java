@@ -42,8 +42,8 @@ public class IndexingService {
     }
 
     public void removePageAndIndexes(String url) {
-        if(pageService.checkIfPageExists(url)) {
-            String path = getPathFromLink(url);
+        String path = getPathFromLink(url);
+        if(pageService.checkIfPageExists(path)) {
             Page page = pageService.findPageByName(path);
             indexService.deleteByPageId(page.getId());
             pageService.deletePage(page);
