@@ -1,7 +1,7 @@
 package main.services;
 
 import main.dao.FieldDao;
-import main.dao.FieldDaoCrud;
+import main.repository.FieldRepository;
 import main.models.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,21 +16,21 @@ public class FieldService {
     private FieldDao fieldDao;
 
     @Autowired
-    private FieldDaoCrud fieldDaoCrud;
+    private FieldRepository fieldRepository;
 
     public FieldService() {
     }
 
     public Optional<Field> findField(int id) {
-        return fieldDaoCrud.findById(id);
+        return fieldRepository.findById(id);
     }
 
     public void saveField(Field field) {
-        fieldDaoCrud.save(field);
+        fieldRepository.save(field);
     }
 
     public void deleteField(Field field) {
-        fieldDaoCrud.delete(field);
+        fieldRepository.delete(field);
     }
 
     public void updateField(Field field) {
@@ -38,11 +38,11 @@ public class FieldService {
     }
 
     public List<Field> findAllFields() {
-        return fieldDaoCrud.findAll();
+        return fieldRepository.findAll();
     }
 
     public void deleteAllFields() {
-        fieldDaoCrud.deleteAll();
+        fieldRepository.deleteAll();
     }
 
     public void initializeFields(){

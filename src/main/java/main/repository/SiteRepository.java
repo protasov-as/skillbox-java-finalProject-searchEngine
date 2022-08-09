@@ -1,4 +1,4 @@
-package main.dao;
+package main.repository;
 
 import main.models.Site;
 import org.springframework.data.repository.CrudRepository;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public interface SiteDaoCrud extends CrudRepository<Site, Integer> {
+public interface SiteRepository extends CrudRepository<Site, Integer> {
 
     List<Site> findAll();
 

@@ -1,7 +1,7 @@
 package main.services;
 
 import main.dao.SiteDao;
-import main.dao.SiteDaoCrud;
+import main.repository.SiteRepository;
 import main.models.Site;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,12 +16,12 @@ public class SiteService {
     private SiteDao siteDao;
 
     @Autowired
-    private SiteDaoCrud siteDaoCrud;
+    private SiteRepository siteRepository;
 
-    public Optional<Site> findById(Integer id) {return siteDaoCrud.findById(id);}
+    public Optional<Site> findById(Integer id) {return siteRepository.findById(id);}
 
     public int saveSite(Site site) {
-        return siteDaoCrud.save(site).getId();
+        return siteRepository.save(site).getId();
     }
 
     public void updateSite(Site site) {
@@ -33,22 +33,23 @@ public class SiteService {
     }
 
     public long countSites() {
-        return siteDaoCrud.count();
+        return siteRepository.count();
     }
 
-    public Site findByName(String url) {return siteDaoCrud.findByUrlLike(url);}
+    public Site findByName(String url) {return siteRepository.findByUrlLike(url);}
 
-    public Site findByExactName(String url) {return siteDaoCrud.findByUrlEquals(url);}
+    public Site findByExactName(String url) {return siteRepository.findByUrlEquals(url);}
 
     public Boolean checkIfSiteExists(String name) {return siteDao.checkIfSiteExists(name);}
 
-    public Boolean checkIfSiteExistsByExactMatch(String url) {return siteDaoCrud.existsByUrl(url);}
+    public Boolean checkIfSiteExistsByExactMatch(String url) {return siteRepository.existsByUrl(url);}
 
     public void markAllSitesAsFailed(){ siteDao.markAllSitesAsFailed();}
 
-    public void delete(Site site) {siteDaoCrud.delete(site);}
+    public void delete(Site site) {
+        siteRepository.delete(site);}
 
     public List<Site> findAllSites() {
-        return siteDaoCrud.findAll();
+        return siteRepository.findAll();
     }
 }

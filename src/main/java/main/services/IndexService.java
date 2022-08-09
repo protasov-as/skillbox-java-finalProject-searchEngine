@@ -1,7 +1,7 @@
 package main.services;
 
 import main.dao.IndexDao;
-import main.dao.IndexDaoCrud;
+import main.repository.IndexRepository;
 import main.models.Index;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,21 +16,21 @@ public class IndexService {
     private IndexDao indexDao;
 
     @Autowired
-    private IndexDaoCrud indexDaoCrud;
+    private IndexRepository indexRepository;
 
     public IndexService(){
     }
 
     public Optional<Index> findIndex(int id) {
-        return indexDaoCrud.findById(id);
+        return indexRepository.findById(id);
     }
 
     public int saveIndex(Index index) {
-        return indexDaoCrud.save(index).getId();
+        return indexRepository.save(index).getId();
     }
 
     public Boolean checkIfIndexExists(int page_id, int lemma_id) {
-        return indexDaoCrud.existsByPageIdAndLemmaId(page_id, lemma_id);
+        return indexRepository.existsByPageIdAndLemmaId(page_id, lemma_id);
 //        return indexDao.checkIfIndexExists(page_id, lemma_id);
     }
 
@@ -55,7 +55,7 @@ public class IndexService {
     }
 
     public void deleteIndex(Index index) {
-        indexDaoCrud.delete(index);
+        indexRepository.delete(index);
     }
 
     public void updateIndex(Index index) {
@@ -63,11 +63,11 @@ public class IndexService {
     }
 
     public List<Index> findAllIndexes() {
-        return indexDaoCrud.findAll();
+        return indexRepository.findAll();
     }
 
     public void deleteAllIndexes() {
-        indexDaoCrud.deleteAll();
+        indexRepository.deleteAll();
     }
 
     public void dropAndCreateTableIndex() {

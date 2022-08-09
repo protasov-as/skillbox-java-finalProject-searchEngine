@@ -1,7 +1,7 @@
 package main.services;
 
 import main.dao.PageDao;
-import main.dao.PageDaoCrud;
+import main.repository.PageRepository;
 import main.models.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,17 +16,17 @@ public class PageService {
     private PageDao pageDao;
 
     @Autowired
-    private PageDaoCrud pageDaoCrud;
+    private PageRepository pageRepository;
 
     public PageService() {
     }
 
     public Optional<Page> findPage(int id) {
-        return pageDaoCrud.findById(id);
+        return pageRepository.findById(id);
     }
 
     public Long countPages() {
-        return pageDaoCrud.count();
+        return pageRepository.count();
     }
 
     public Long countPagesOnSite(int siteID)  {
@@ -34,15 +34,15 @@ public class PageService {
     }
 
     public Page findPageByName(String path) {
-        return pageDaoCrud.findByPathEquals(path);
+        return pageRepository.findByPathEquals(path);
     }
 
     public Boolean checkIfPageExists(String path) {
-        return pageDaoCrud.existsByPath(path);
+        return pageRepository.existsByPath(path);
     }
 
     public int savePage(Page page) {
-        return pageDaoCrud.save(page).getId();
+        return pageRepository.save(page).getId();
     }
 
     public void persistPage(Page page) {
@@ -50,7 +50,7 @@ public class PageService {
     }
 
     public void deletePage(Page page) {
-        pageDaoCrud.delete(page);
+        pageRepository.delete(page);
     }
 
     public void updatePage(Page page) {
@@ -58,13 +58,13 @@ public class PageService {
     }
 
     public List<Page> findAllPages() {
-        return pageDaoCrud.findAll();
+        return pageRepository.findAll();
     }
 
     public List<Page> findAllBySiteId(int siteID) {return pageDao.findAllbySiteId(siteID);}
 
     public void deleteAllPages() {
-        pageDaoCrud.deleteAll();
+        pageRepository.deleteAll();
     }
 
     public void dropAndCreateTablePage() {

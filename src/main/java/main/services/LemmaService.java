@@ -1,7 +1,7 @@
 package main.services;
 
 import main.dao.LemmaDao;
-import main.dao.LemmaDaoCrud;
+import main.repository.LemmaRepository;
 import main.models.Lemma;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,22 +15,22 @@ public class LemmaService {
     private LemmaDao lemmaDao;
 
     @Autowired
-    private LemmaDaoCrud lemmaDaoCrud;
+    private LemmaRepository lemmaRepository;
 
     public LemmaService() {
     }
 
     public Optional<Lemma> findLemma(Integer id) {
-        return lemmaDaoCrud.findById(id);
+        return lemmaRepository.findById(id);
     }
 
     public List<Lemma> findLemmaByName(String lemma) {
-        return lemmaDaoCrud.findAllByLemma(lemma);
+        return lemmaRepository.findAllByLemma(lemma);
 //        return lemmaDao.findByName(lemma);
     }
 
     public Lemma findByNameAndSiteID(String lemma, int siteID) {
-        return lemmaDaoCrud.findByLemmaAndSiteID(lemma, siteID);
+        return lemmaRepository.findByLemmaAndSiteID(lemma, siteID);
 //        return lemmaDao.findByNameAndSiteID(lemma, siteID);
     }
 
@@ -39,7 +39,7 @@ public class LemmaService {
     }
 
     public void saveLemma(Lemma lemma) {
-        lemmaDaoCrud.save(lemma);
+        lemmaRepository.save(lemma);
     }
 
     public int saveOrUpdateLemma(Lemma lemma) {
@@ -51,7 +51,7 @@ public class LemmaService {
     }
 
     public void deleteLemma(Lemma lemma) {
-        lemmaDaoCrud.delete(lemma);
+        lemmaRepository.delete(lemma);
     }
 
     public void updateLemma(Lemma lemma) {
@@ -59,20 +59,20 @@ public class LemmaService {
     }
 
     public List<Lemma> findAllLemmas() {
-        return lemmaDaoCrud.findAll();
+        return lemmaRepository.findAll();
     }
 
     public List<Lemma> findAllBySiteID(int siteID) {
-        return lemmaDaoCrud.findAllBySiteID(siteID);
+        return lemmaRepository.findAllBySiteID(siteID);
 //        return lemmaDao.findAllBySiteID(siteID);
     }
 
     public void deleteAllLemmas() {
-        lemmaDaoCrud.deleteAll();
+        lemmaRepository.deleteAll();
     }
 
     public long countlemmas() {
-        return lemmaDaoCrud.count();
+        return lemmaRepository.count();
     }
 
     public Long countLemmasOnSite(int siteID)  {
