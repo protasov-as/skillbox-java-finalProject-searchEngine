@@ -43,7 +43,9 @@ public class IndexDao implements DaoInterface<Index, Integer>{
     }
 
     public Index findByIdPair(int page_id, int lemma_id) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Index where page_id = :page_id and lemma_id = :lemma_id");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Index where page_id = :page_id and lemma_id = :lemma_id");
         query.setParameter("page_id", page_id);
         query.setParameter("lemma_id", lemma_id);
         Index index = (Index) query.getSingleResult();
@@ -51,7 +53,9 @@ public class IndexDao implements DaoInterface<Index, Integer>{
     }
 
     public Boolean checkIfIndexExists(int page_id, int lemma_id) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Index where page_id = :page_id and lemma_id = :lemma_id");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Index where page_id = :page_id and lemma_id = :lemma_id");
         query.setParameter("page_id", page_id);
         query.setParameter("lemma_id", lemma_id);
         return (!query.getResultList().isEmpty());
@@ -77,11 +81,15 @@ public class IndexDao implements DaoInterface<Index, Integer>{
 
     @Override
     public Index findById(Integer id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Index.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        return session.get(Index.class, id);
     }
 
     public List<Index> findByLemmaId(int lemma_id) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Index where lemma_id = :lemma_id");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Index where lemma_id = :lemma_id");
         query.setParameter("lemma_id", lemma_id);
         List<Index> indexes = query.getResultList();
         return indexes;
@@ -105,7 +113,9 @@ public class IndexDao implements DaoInterface<Index, Integer>{
 
     @Override
     public List<Index> findAll() {
-        List<Index> indexes = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Index").list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        List<Index> indexes = session.createQuery("From Index").list();
         return indexes;
     }
 

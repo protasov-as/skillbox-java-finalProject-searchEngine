@@ -44,31 +44,41 @@ public class SiteDao implements DaoInterface<Site, Integer>{
 
     @Override
     public Site findById(Integer id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Site.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        return session.get(Site.class, id);
     }
 
     public Site findByName(String url) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Site where url like :url");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Site where url like :url");
         query.setParameter("url", url);
         Site site = (Site) query.getSingleResult();
         return site;
     }
 
     public Site findByExactName(String url) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Site where url =:url");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Site where url =:url");
         query.setParameter("url", url);
         Site site = (Site) query.getSingleResult();
         return site;
     }
 
     public Boolean checkIfSiteExistsByExactMatch(String name) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Site where url =:url");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Site where url =:url");
         query.setParameter("url", name);
         return (!query.getResultList().isEmpty());
     }
 
     public Boolean checkIfSiteExists(String name) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Site where url like :url");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Site where url like :url");
         query.setParameter("url", name);
         return (!query.getResultList().isEmpty());
     }
@@ -84,7 +94,9 @@ public class SiteDao implements DaoInterface<Site, Integer>{
 
     @Override
     public List<Site> findAll() {
-        List<Site> sites = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Site").list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        List<Site> sites = session.createQuery("From Site").list();
         return sites;
     }
 
@@ -97,7 +109,9 @@ public class SiteDao implements DaoInterface<Site, Integer>{
     }
 
     public Long countSites() {
-        return (Long) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("SELECT count(*) from Site").getSingleResult();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        return (Long) session.createQuery("SELECT count(*) from Site").getSingleResult();
     }
 
     public void markAllSitesAsFailed(){

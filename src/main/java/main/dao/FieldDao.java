@@ -43,7 +43,9 @@ public class FieldDao implements DaoInterface<Field, Integer>{
 
     @Override
     public Field findById(Integer id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Field.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        return session.get(Field.class, id);
     }
 
     @Override
@@ -57,7 +59,9 @@ public class FieldDao implements DaoInterface<Field, Integer>{
 
     @Override
     public List<Field> findAll() {
-        List<Field> fields = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Field").list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        List<Field> fields = session.createQuery("From Field").list();
         return fields;
     }
 

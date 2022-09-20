@@ -88,12 +88,16 @@ public class LemmaDao implements DaoInterface<Lemma, Integer>{
 
     @Override
     public Lemma findById(Integer id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Lemma.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        return session.get(Lemma.class, id);
     }
 
     @Override
     public List<Lemma> findAll() {
-        List<Lemma> lemmas = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Lemma").list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        List<Lemma> lemmas = session.createQuery("From Lemma").list();
         return lemmas;
     }
 
@@ -108,7 +112,9 @@ public class LemmaDao implements DaoInterface<Lemma, Integer>{
     }
 
     public List<Lemma> findByName(String name) {
-        List<Lemma> lemmas = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Lemma where lemma = :lemma").setParameter("lemma", name).list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        List<Lemma> lemmas = session.createQuery("from Lemma where lemma = :lemma").setParameter("lemma", name).list();
 
         if(!lemmas.isEmpty()) {
             return lemmas;
@@ -123,7 +129,9 @@ public class LemmaDao implements DaoInterface<Lemma, Integer>{
     }
 
     public Lemma findByNameAndSiteID(String name, int siteID) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Lemma where lemma = :lemma and site_id = :site_id");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Lemma where lemma = :lemma and site_id = :site_id");
         query.setParameter("lemma", name);
         query.setParameter("site_id", siteID);
         if(!query.getResultList().isEmpty()) {
@@ -161,11 +169,15 @@ public class LemmaDao implements DaoInterface<Lemma, Integer>{
     }
 
     public Long countLemmas() {
-        return (Long) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("SELECT count(*) from Lemma").getSingleResult();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        return (Long) session.createQuery("SELECT count(*) from Lemma").getSingleResult();
     }
 
     public Long countLemmasOnSite(int siteID) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("SELECT count(*) from Lemma where site_id = :site_id");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("SELECT count(*) from Lemma where site_id = :site_id");
         query.setParameter("site_id", siteID);
         return (Long) query.getSingleResult();
     }

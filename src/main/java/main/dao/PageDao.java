@@ -44,28 +44,38 @@ public class PageDao implements DaoInterface<Page, Integer>{
 
     @Override
     public Page findById(Integer id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Page.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        return session.get(Page.class, id);
     }
 
     public Page findByName(String name) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Page where path = :path");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Page where path = :path");
         query.setParameter("path", name);
         Page page = (Page) query.getSingleResult();
         return page;
     }
 
     public Boolean checkIfPageExists(String name) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("from Page where path = :path");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("from Page where path = :path");
         query.setParameter("path", name);
         return (!query.getResultList().isEmpty());
     }
 
     public Long countPages() {
-        return (Long) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("SELECT count(*) from Page").getSingleResult();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        return (Long) session.createQuery("SELECT count(*) from Page").getSingleResult();
     }
 
     public Long countPagesOnSite(int siteID) {
-        Query query = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("SELECT count(*) from Page where site_id = :site_id");
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        Query query = session.createQuery("SELECT count(*) from Page where site_id = :site_id");
         query.setParameter("site_id", siteID);
         return (Long) query.getSingleResult();
     }
@@ -81,14 +91,16 @@ public class PageDao implements DaoInterface<Page, Integer>{
 
     @Override
     public List<Page> findAll() {
-        List<Page> pages = HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Page").list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        List<Page> pages = session.createQuery("From Page").list();
         return pages;
     }
 
     public List<Page> findAllbySiteId(int siteID) {
-        List<Page> pages = HibernateSessionFactoryUtil
-                .getSessionFactory()
-                .openSession()
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        session.setDefaultReadOnly(true);
+        List<Page> pages = session
                 .createQuery("From Page where site_id = :site_id")
                 .setParameter("site_id", siteID)
                 .list();
