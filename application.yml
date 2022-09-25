@@ -1,8 +1,32 @@
+spring:
+  security:
+    user:
+      name: user
+      password: 123
+  dataSource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/skillbox?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: 123
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        generate_statistics: true
+        session:
+          events:
+            log:
+              LOG_QUERIES_SLOWER_THAN_MS: 100
+
 config:
   userAgent: Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6
   referrer: http://www.google.com
   webInterfacePath: /admin
   sites:
+#    - url: https://www.abc-camp.ru/
+#      name: ABC camp
+#
     - url: https://www.abc-school.org/
       name: ABC
 #    -
@@ -30,12 +54,3 @@ config:
 #      url: https://playback.ru/
 #      name: PlayBack
 
-
-
-sql:
-  url: jdbc:mysql://localhost:3306/test?useSSL=false
-  username: root
-  password: pwd
-  driverClassName: com.mysql.jdbc.Driver
-  showSql: true
-  ddlAutoMode: update
