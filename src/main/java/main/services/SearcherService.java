@@ -8,10 +8,15 @@ import java.util.ArrayList;
 
 @Component
 public class SearcherService {
-    @Autowired
+
     private Searcher searcher;
-    @Autowired
     private SiteService siteService;
+
+    @Autowired
+    public SearcherService(Searcher searcher, SiteService siteService) {
+        this.searcher = searcher;
+        this.siteService = siteService;
+    }
 
     public SearcherService() {
     }

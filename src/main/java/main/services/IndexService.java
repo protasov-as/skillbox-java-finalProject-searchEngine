@@ -12,11 +12,15 @@ import java.util.Optional;
 @Component
 public class IndexService {
 
-    @Autowired
     private IndexDao indexDao;
+    private IndexRepository indexRepository;
 
     @Autowired
-    private IndexRepository indexRepository;
+    public IndexService(IndexDao indexDao, IndexRepository indexRepository) {
+        this.indexDao = indexDao;
+        this.indexRepository = indexRepository;
+    }
+
 
     public IndexService(){
     }

@@ -12,11 +12,14 @@ import java.util.Optional;
 @Component
 public class SiteService {
 
-    @Autowired
     private SiteDao siteDao;
+    private SiteRepository siteRepository;
 
     @Autowired
-    private SiteRepository siteRepository;
+    public SiteService(SiteDao siteDao, SiteRepository siteRepository) {
+        this.siteDao = siteDao;
+        this.siteRepository = siteRepository;
+    }
 
     public Optional<Site> findById(Integer id) {return siteRepository.findById(id);}
 

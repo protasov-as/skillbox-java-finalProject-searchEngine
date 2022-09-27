@@ -8,22 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-@Controller
+@RestController
 public class StatisticsController {
 
-    @Autowired
     private ConfigService configService;
+    private StatisticsService statisticsService;
+    private Statistics statistics;
+    private StatisticsResponse statisticsResponse;
+
     @Autowired
-    StatisticsService statisticsService;
-    @Autowired
-    Statistics statistics;
-    @Autowired
-    StatisticsResponse statisticsResponse;
+    public StatisticsController(ConfigService configService, StatisticsService statisticsService, Statistics statistics, StatisticsResponse statisticsResponse) {
+        this.configService = configService;
+        this.statisticsService = statisticsService;
+        this.statistics = statistics;
+        this.statisticsResponse = statisticsResponse;
+    }
 
     @GetMapping("/statistics")
     public ResponseEntity<Object> getStatistics(){

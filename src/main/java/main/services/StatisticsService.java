@@ -13,12 +13,16 @@ import java.util.List;
 @Component
 public class StatisticsService {
 
-    @Autowired
     private SiteService siteService;
-    @Autowired
     private PageService pageService;
-    @Autowired
     private LemmaService lemmaService;
+
+    @Autowired
+    public StatisticsService(SiteService siteService, PageService pageService, LemmaService lemmaService) {
+        this.siteService = siteService;
+        this.pageService = pageService;
+        this.lemmaService = lemmaService;
+    }
 
     public Statistics getStatistics(){
         Total total = getTotal();

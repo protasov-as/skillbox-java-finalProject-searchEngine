@@ -17,16 +17,20 @@ import java.util.stream.Collectors;
 @Component
 public class Searcher {
 
-    @Autowired
     private IndexService indexService;
-    @Autowired
     private PageService pageService;
-    @Autowired
     private SiteService siteService;
-    @Autowired
     private LemmaService lemmaService;
-    @Autowired
     private Lemmatizer lemmatizer;
+
+    @Autowired
+    public Searcher(IndexService indexService, PageService pageService, SiteService siteService, LemmaService lemmaService, Lemmatizer lemmatizer) {
+        this.indexService = indexService;
+        this.pageService = pageService;
+        this.siteService = siteService;
+        this.lemmaService = lemmaService;
+        this.lemmatizer = lemmatizer;
+    }
 
     private int lemmaInInputCount;
 

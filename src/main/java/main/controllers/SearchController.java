@@ -9,16 +9,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-@Controller
+@RestController
 public class SearchController {
 
-    @Autowired
-    SearcherService searcherService;
+    private SearcherService searcherService;
 
+    @Autowired
+    public SearchController(SearcherService searcherService) {
+        this.searcherService = searcherService;
+    }
 
     @GetMapping("/search")
     public ResponseEntity<Object> search(

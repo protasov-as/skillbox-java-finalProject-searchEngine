@@ -12,11 +12,14 @@ import java.util.Optional;
 @Component
 public class FieldService {
 
-    @Autowired
     private FieldDao fieldDao;
+    private FieldRepository fieldRepository;
 
     @Autowired
-    private FieldRepository fieldRepository;
+    public FieldService(FieldDao fieldDao, FieldRepository fieldRepository) {
+        this.fieldDao = fieldDao;
+        this.fieldRepository = fieldRepository;
+    }
 
     public FieldService() {
     }

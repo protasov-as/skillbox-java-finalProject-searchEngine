@@ -14,20 +14,25 @@ import java.util.*;
 
 @Component
 public class IndexingService {
-    @Autowired
+
     SiteService siteService;
-    @Autowired
     UrlRecursiveParser urlRecursiveParser;
-    @Autowired
     PageService pageService;
-    @Autowired
     IndexService indexService;
-    @Autowired
     LemmaService lemmaService;
-    @Autowired
     ConfigService configService;
-    @Autowired
     DBSaver dbSaver;
+
+    @Autowired
+    public IndexingService(SiteService siteService, UrlRecursiveParser urlRecursiveParser, PageService pageService, IndexService indexService, LemmaService lemmaService, ConfigService configService, DBSaver dbSaver) {
+        this.siteService = siteService;
+        this.urlRecursiveParser = urlRecursiveParser;
+        this.pageService = pageService;
+        this.indexService = indexService;
+        this.lemmaService = lemmaService;
+        this.configService = configService;
+        this.dbSaver = dbSaver;
+    }
 
     public IndexingService() {
     }

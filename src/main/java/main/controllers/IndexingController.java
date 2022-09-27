@@ -13,21 +13,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.*;
 
-@Controller
+@RestController
 public class IndexingController {
 
+    private StatisticsService statisticsService;
+    private IndexingService indexingService;
+    private SiteService siteService;
+    private ConfigService configService;
+
     @Autowired
-    StatisticsService statisticsService;
-    @Autowired
-    IndexingService indexingService;
-    @Autowired
-    SiteService siteService;
-    @Autowired
-    ConfigService configService;
+    public IndexingController(StatisticsService statisticsService, IndexingService indexingService, SiteService siteService, ConfigService configService) {
+        this.statisticsService = statisticsService;
+        this.indexingService = indexingService;
+        this.siteService = siteService;
+        this.configService = configService;
+    }
+
 
     @GetMapping("/startIndexing")
     public ResponseEntity<Object> startIndexingAll() {

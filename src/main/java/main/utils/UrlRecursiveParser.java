@@ -16,15 +16,16 @@ import java.util.concurrent.RecursiveTask;
 @Component
 public class UrlRecursiveParser extends RecursiveTask<HashSet<String>> {
 
-    @Autowired
     private DBSaver dbSaver;
-
-    @Autowired
     private ApplicationContext applicationContext;
-
-    @Autowired
     private ConfigService configService;
 
+    @Autowired
+    public UrlRecursiveParser(DBSaver dbSaver, ApplicationContext applicationContext, ConfigService configService) {
+        this.dbSaver = dbSaver;
+        this.applicationContext = applicationContext;
+        this.configService = configService;
+    }
 
     private String url;
     private HashSet<String> outLinksSet;

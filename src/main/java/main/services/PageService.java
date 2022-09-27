@@ -12,11 +12,14 @@ import java.util.Optional;
 @Component
 public class PageService {
 
-    @Autowired
     private PageDao pageDao;
+    private PageRepository pageRepository;
 
     @Autowired
-    private PageRepository pageRepository;
+    public PageService(PageDao pageDao, PageRepository pageRepository) {
+        this.pageDao = pageDao;
+        this.pageRepository = pageRepository;
+    }
 
     public PageService() {
     }

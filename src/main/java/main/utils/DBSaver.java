@@ -18,20 +18,24 @@ import java.util.List;
 @Component
 public class DBSaver {
 
-    @Autowired
     private SiteService siteService;
-    @Autowired
     private PageService pageService;
-    @Autowired
     private FieldService fieldService;
-    @Autowired
     private LemmaService lemmaService;
-    @Autowired
     private IndexService indexService;
-    @Autowired
     private Lemmatizer lemmatizer;
-    @Autowired
     private ConfigService configService;
+
+    @Autowired
+    public DBSaver(SiteService siteService, PageService pageService, FieldService fieldService, LemmaService lemmaService, IndexService indexService, Lemmatizer lemmatizer, ConfigService configService) {
+        this.siteService = siteService;
+        this.pageService = pageService;
+        this.fieldService = fieldService;
+        this.lemmaService = lemmaService;
+        this.indexService = indexService;
+        this.lemmatizer = lemmatizer;
+        this.configService = configService;
+    }
 
     public void addPagesToDBviaHibernate(String url) throws IOException {
         int code = Jsoup.connect(url)

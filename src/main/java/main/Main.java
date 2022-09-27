@@ -11,18 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 //        ApplicationContext context = new AnnotationConfigApplicationContext("main");
-
         SpringApplication.run(Main.class, args);
-
     }
 
-    public static void startMainOld(){
-
-        long start = System.currentTimeMillis();
-
-
-        long finish = System.currentTimeMillis();
-        long elapsed = (finish - start) / 1000;
-        System.out.println("Прошло времени, сек: " + elapsed);
-    }
 }

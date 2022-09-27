@@ -11,11 +11,15 @@ import java.util.Optional;
 
 @Component
 public class LemmaService {
-    @Autowired
+
     private LemmaDao lemmaDao;
+    private LemmaRepository lemmaRepository;
 
     @Autowired
-    private LemmaRepository lemmaRepository;
+    public LemmaService(LemmaDao lemmaDao, LemmaRepository lemmaRepository) {
+        this.lemmaDao = lemmaDao;
+        this.lemmaRepository = lemmaRepository;
+    }
 
     public LemmaService() {
     }
